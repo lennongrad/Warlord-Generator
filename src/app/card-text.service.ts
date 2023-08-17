@@ -111,17 +111,11 @@ export class CardTextService {
   }
 
   getMainTypeline(data: CardData): string{
-    var baseline = "Hero Unit";
-
-
-    return baseline;
+    return data.cardTypes;
   }
 
   getSubTypeline(data: CardData): string{
-    var baseline = "Ogre Soldier";
-
-
-    return baseline;
+    return data.subTypes;
   }
 
   constructor() { }

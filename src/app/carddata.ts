@@ -5,23 +5,11 @@ export enum Resource{
     Gemstones,
 }
 
-export enum Supertype{
-    None,
-    Elite = 1 << 0,
-    Hero = 1 << 1
-}
-
-export enum Cardtype{
-    Unit,
-    Spell,
-    Reaction
-}
-
-export enum UnitType{
-    None = 0,
-    Ogre = 1 << 0,
-    Human = 1 << 1,
-    Goblin = 1 << 2
+export interface UnitStats{
+    attack: number,
+    defense: number,
+    damage: number,
+    health: number,
 }
 
 export interface AbilityData{
@@ -31,19 +19,15 @@ export interface AbilityData{
 }
 
 export interface CardData{
-    attack: number,
-    defense: number,
-    damage: number,
-    health: number,
-    vp: number,
-    supertypes: Supertype,
-    cardType: Cardtype,
-    unitTypes: UnitType,
-    cost: Record<Resource, number>,
     abilities: Array<AbilityData>,
-    text?: string,
+    text: string,
     flavor: string,
     name: string,
     imageURL: string,
     artistCredit: string
+    cardTypes: string,
+    subTypes: string,
+    cost: Record<Resource, number>,
+    vp?: number,
+    unitStats?: UnitStats,
 }

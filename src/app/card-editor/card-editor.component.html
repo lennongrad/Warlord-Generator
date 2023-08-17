@@ -1,0 +1,98 @@
+<div id="editor-container">
+    <div class="editor-option">
+        <div class="option-title">Name:</div>
+        <div class="option-input">
+            <input (keyup)="nameKey($event)" #name>
+        </div>
+    </div>
+    <div class="editor-option">
+        <div class="option-title">Artist:</div>
+        <div class="option-input">
+            <input (keyup)="creditKey($event)" #credit>
+        </div>
+    </div>
+    <div class="editor-option">
+        <div class="option-title">Image URL:</div>
+        <div class="option-input">
+            <input (keyup)="urlKey($event)" #url>
+        </div>
+    </div>
+    <div class="editor-option">
+        <div class="option-title">Rules Text:</div>
+        <div class="option-input">
+            <input (keyup)="textKey($event)" #text>
+        </div>
+    </div>
+    <div class="editor-option">
+        <div class="option-title">Flavor Text:</div>
+        <div class="option-input">
+            <input (keyup)="flavorKey($event)" #flavor>
+        </div>
+    </div>
+    <div class="editor-option">
+        <div class="option-title">Main Types:</div>
+        <div class="option-input">
+            <input (keyup)="typesKey($event)" #types>
+        </div>
+    </div>
+    <div class="editor-option">
+        <div class="option-title">Subtypes:</div>
+        <div class="option-input">
+            <input (keyup)="subtypesKey($event)" #subtypes>
+        </div>
+    </div>
+    <div class="editor-option">
+        <div class="option-title">VP:</div>
+        <div class="option-input">
+            <input (keyup)="vpKey($event)" #vp>
+        </div>
+    </div>
+    <div class="editor-option">
+        <div class="option-title">Have Stats:</div>
+        <div class="option-input checkbox-input">
+            <input (change)="haveStatsClick($event)" #haveStats type="checkbox">
+        </div>
+    </div>
+    <div class="editor-option" [hidden]="!getHaveStats()">
+        <div class="option-title">Stats:</div>
+        <div class="option-input" id="option-stats">
+            <div id="stats-attack" class="stats-icon"><img src="assets/attack.svg"></div>
+            <input (keyup)="statsKey('attack', $event)" #statsAttack>
+            <div id="stats-defense" class="stats-icon"><img src="assets/defense.svg"></div>
+            <input (keyup)="statsKey('defense', $event)" #statsDefense>
+            <div id="stats-damage" class="stats-icon"><img src="assets/damage.svg"></div>
+            <input (keyup)="statsKey('damage', $event)" #statsDamage>
+            <div id="stats-health" class="stats-icon"><img src="assets/health.svg"></div>
+            <input (keyup)="statsKey('health', $event)" #statsHealth>
+        </div>
+    </div>
+    <div class="editor-option">
+        <div class="option-title">Cost:</div>
+        <div class="option-input" id="option-cost">
+            <div id="cost-food" class="cost-icon"><img src="assets/food.svg"></div>
+            <input (keyup)="costKey('food', $event)" #costFood>
+            <div id="cost-wood" class="cost-icon"><img src="assets/wood.svg"></div>
+            <input (keyup)="costKey('wood', $event)" #costWood>
+            <div id="cost-gemstones" class="cost-icon"><img src="assets/gemstones.svg"></div>
+            <input (keyup)="costKey('gemstones', $event)" #costGemstones>
+            <div id="cost-generic" class="cost-icon"><img src="assets/generic.svg"></div>
+            <input (keyup)="costKey('generic', $event)" #costGeneric>
+        </div>
+    </div>
+    <div class="editor-option" id="option-abilities">
+        <div class="option-title">Abilities:</div>
+        <div class="option-input">
+            <div id="abilities-buttons">
+                <button (click)="addAbility()">Add Ability</button>
+                <button (click)="removeAbility()">Remove Ability</button>
+            </div>
+            <div class="option-input" #abilitiesList>
+                <div class="ability-option" *ngFor="let x of [].constructor(getAbilitiesLength()); let i = index">
+                    <input class="ability-name" (keyup)="abilityNameInput(i,$event)">
+                    <input class="ability-reminder" (keyup)="abilityReminderInput(i,$event)">
+                    <input class="ability-override" type="checkbox" (change)="abilityOverrideInput(i,$event)">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

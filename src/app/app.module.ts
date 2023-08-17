@@ -6,11 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CardDisplayComponent } from './card-display/card-display.component';
+import { CardEditorComponent } from './card-editor/card-editor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardDisplayComponent,
+    CardEditorComponent,
   ],
   imports: [
     HttpClientModule,

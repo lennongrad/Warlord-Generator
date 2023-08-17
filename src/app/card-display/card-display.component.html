@@ -29,39 +29,39 @@
             </div>
         </div>
         <div id="section-textbox" class="section" [style]="{fontSize: fontSizeSmall + 'px'}">
-            <div id="textbox-main">
+            <div id="textbox-main" [class.statless]="getStat('attack') == null ">
                 <div class="ability-reminder" *ngFor="let ability of getWithReminders() | keyvalue">
                     <b  [style]="{fontSize: fontSizeSmall + 'px'}">{{ability.key}}</b><i  [style]="{fontSize: fontSizeReminder + 'px'}"> ({{ability.value}})</i>
                 </div>
                 <b  [style]="{fontSize: fontSizeSmall + 'px'}">{{getReminderless()}}</b>
                 <div [style]="{fontSize: fontSizeSmall + 'px'}">{{getText()}}</div>
-                <div id="main-flavor" [style]="{fontSize: fontSizeSmall + 'px'}">{{getFlavorText()}}</div>
+                <div id="main-flavor" [style]="{fontSize: fontSizeSmall + 'px'}" [hidden]="getFlavorText() == ''">{{getFlavorText()}}</div>
             </div>
-            <div id="textbox-stats">
-                <div id="stats-attack" class="stats-item" [style]="{height: resourceIconSize * 1.1 + 'px'}">
+            <div id="textbox-stats" [style]="{visibility: getStat('attack') != null ? 'visible' : 'hidden'}">
+                <div id="stats-attack" class="stats-item" [style]="{height: statIconSize * 1.1 + 'px'}">
                     <div class="stats-item-value" [style]="{fontSize: fontSizeLarge + 'px'}">{{getStat("attack")}}</div>
-                    <img src="assets/attack.svg" [style]="{width: resourceIconSize + 'px', height: resourceIconSize + 'px'}">
+                    <img src="assets/attack.svg" [style]="{width: statIconSize + 'px', height: statIconSize + 'px'}">
                 </div>
-                <div id="stats-defense" class="stats-item" [style]="{height: resourceIconSize * 1.1 + 'px'}">
+                <div id="stats-defense" class="stats-item" [style]="{height: statIconSize * 1.1 + 'px'}">
                     <div class="stats-item-value" [style]="{fontSize: fontSizeLarge + 'px'}">{{getStat("defense")}}</div>
-                    <img src="assets/defense.svg" [style]="{width: resourceIconSize + 'px', height: resourceIconSize + 'px'}">
+                    <img src="assets/defense.svg" [style]="{width: statIconSize + 'px', height: statIconSize + 'px'}">
                 </div>
-                <div id="stats-damage" class="stats-item" [style]="{height: resourceIconSize * 1.1 + 'px'}">
+                <div id="stats-damage" class="stats-item" [style]="{height: statIconSize * 1.1 + 'px'}">
                     <div class="stats-item-value" [style]="{fontSize: fontSizeLarge + 'px'}">{{getStat("damage")}}</div>
-                    <img src="assets/damage.svg" [style]="{width: resourceIconSize + 'px', height: resourceIconSize + 'px'}">
+                    <img src="assets/damage.svg" [style]="{width: statIconSize + 'px', height: statIconSize + 'px'}">
                 </div>
-                <div id="stats-health" class="stats-item" [style]="{height: resourceIconSize * 1.1 + 'px'}">
+                <div id="stats-health" class="stats-item" [style]="{height: statIconSize * 1.1 + 'px'}">
                     <div class="stats-item-value" [style]="{fontSize: fontSizeLarge + 'px'}">{{getStat("health")}}</div>
-                    <img src="assets/health.svg" [style]="{width: resourceIconSize + 'px', height: resourceIconSize + 'px'}">
+                    <img src="assets/health.svg" [style]="{width: statIconSize + 'px', height: statIconSize + 'px'}">
                 </div>
             </div>
         </div>
-        <div id="section-typeline" class="section" [style]="{fontSize: fontSizeMedium + 'px'}">
+        <div id="section-typeline" class="section" [class.vpless]="getVP() == null" [style]="{fontSize: fontSizeMedium + 'px'}">
             <div id="typeline-main">{{getTypeline(true)}}</div>
             <div id="typeline-subtype">{{getTypeline(false)}}</div>
         </div>
-        <div id="section-vp">
-            <div id="vp-value" [style]="{fontSize: fontSizeMedium + 'px'}">{{getStat("vp")}}</div>
+        <div id="section-vp" [style]="{visibility: getVP() != null ? 'visible' : 'hidden'}">
+            <div id="vp-value" [style]="{fontSize: fontSizeMedium + 'px'}">{{getVP()}}</div>
             <img src="assets/crown2.svg" [style]="{width: innerCardWidth * .32 + 'px', height: innerCardHeight * .2 + 'px'}">
         </div>
         <div id="section-footer" class="section" [style]="{fontSize: fontSizeTiny + 'px'}">

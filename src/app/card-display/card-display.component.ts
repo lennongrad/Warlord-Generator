@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { HostListener } from '@angular/core';
-import { CardData, UnitType, Resource, Supertype, Cardtype } from '../carddata';
+import { CardData, Resource } from '../carddata';
 import { CardTextService } from '../card-text.service';
+import { CardEditorService } from '../card-editor.service';
 
 @Component({
   selector: 'app-card-display',
@@ -22,34 +23,22 @@ export class CardDisplayComponent {
   // textbox font sizes
   public fontSizeReminder: number = 0;
   // resource icons
+  public statIconSize: number = 0;
   public resourceIconSize: number = 0;
 
   getCurrentCard(): CardData{
-   var exampleCard: CardData = {
-    attack: 4,
-    defense: 7,
-    damage: 2,
-    health: 6,
-    vp: 8,
-    supertypes: Supertype.Hero,
-    cardType: Cardtype.Unit,
-    unitTypes: UnitType.Ogre,
-    cost: {[Resource.Food]: 1, [Resource.Wood]: 1, [Resource.Gemstones]: 1, [Resource.Generic]: 1},
-    abilities: [{name: "Melee", overrideReminder: true}, {name: "Guard", overrideReminder: true}, {name: "Conceal", overrideReminder:false}, {name: "Stalk", overrideReminder:false}],
-    flavor: "\"Ooka booga!\"",
-    name: "Gilrok, the Indomitable",
-    imageURL: "https://cards.scryfall.io/art_crop/front/c/5/c557f035-f93b-41ce-b8de-dea79dcf15be.jpg?1562764198",
-    artistCredit: "Thomas M. Baxa"
-   };
-   return exampleCard;
+    return this.editorService.getCurrentCard();
   }
 
   setCardDimensions(){
-    if(window.innerHeight < window.innerWidth * 7/5){
-      this.cardHeight = window.innerHeight - 40;
+    var containerWidth = this.element.nativeElement.offsetWidth;
+    var containerHeight = this.element.nativeElement.offsetHeight;
+
+    if(containerHeight < containerWidth * 7/5){
+      this.cardHeight = containerHeight - 40;
       this.cardWidth = (this.cardHeight) * 5/7;
     } else {
-      this.cardWidth = window.innerWidth - 40;
+      this.cardWidth = containerWidth - 40;
       this.cardHeight = this.cardWidth * 7/5;
     }
 
@@ -70,6 +59,7 @@ export class CardDisplayComponent {
     }
 
     // set icon size
+    this.statIconSize = this.cardWidth * .075;
     this.resourceIconSize = this.cardWidth * .075;
     if(this.getResourcesTotal() > 6){
       this.resourceIconSize *= Math.pow(.9, this.getResourcesTotal() - 5);
@@ -164,14 +154,24 @@ export class CardDisplayComponent {
     return "calc(5% + " + total * (this.resourceIconSize * 1.2) + "px)";
   }
 
-  getStat(statName: string): number{
-    switch(statName){
-      case "attack": return this.getCurrentCard().attack;
-      case "defense": return this.getCurrentCard().defense;
-      case "damage": return this.getCurrentCard().damage;
-      case "vp": return this.getCurrentCard().vp;
+  getVP(): number | null{
+    if(this.getCurrentCard().vp == undefined){
+      return null;
     }
-    return this.getCurrentCard().health;
+    return this.getCurrentCard().vp!;
+  }
+
+  getStat(statName: string): number | null{
+    if(this.getCurrentCard().unitStats == undefined){
+      return null;
+    }
+
+    switch(statName){
+      case "attack": return this.getCurrentCard().unitStats?.attack!;
+      case "defense": return this.getCurrentCard().unitStats?.defense!;
+      case "damage": return this.getCurrentCard().unitStats?.damage!;
+    }
+    return this.getCurrentCard().unitStats?.health!;
   }
 
   getImageURL(): string{
@@ -191,5 +191,7 @@ export class CardDisplayComponent {
     this.setCardDimensions();
   }
 
-  constructor(private textService: CardTextService){  }
+  constructor(private element:ElementRef, private textService: CardTextService, private editorService: CardEditorService){
+    editorService.cardDisplayComponent = this;
+  }
 }
