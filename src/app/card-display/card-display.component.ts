@@ -45,8 +45,13 @@ export class CardDisplayComponent {
   }
 
   setCardDimensions(){
-    this.cardHeight = window.innerHeight - 20;
-    this.cardWidth = (this.cardHeight) * 5/7;
+    if(window.innerHeight < window.innerWidth * 7/5){
+      this.cardHeight = window.innerHeight - 40;
+      this.cardWidth = (this.cardHeight) * 5/7;
+    } else {
+      this.cardWidth = window.innerWidth - 40;
+      this.cardHeight = this.cardWidth * 7/5;
+    }
 
     var borderDistance = this.cardWidth * .065;
     this.innerCardHeight = this.cardHeight - borderDistance;
