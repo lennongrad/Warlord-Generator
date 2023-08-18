@@ -4,16 +4,12 @@ import { CardData, Resource } from '../carddata';
 import { CardTextService } from '../card-text.service';
 import { CardEditorService } from '../card-editor.service';
 
-import domtoimage from 'dom-to-image';
-
 @Component({
   selector: 'app-card-display',
   templateUrl: './card-display.component.html',
   styleUrls: ['./card-display.component.less']
 })
 export class CardDisplayComponent {
-  @ViewChild('bigCard', { static: true }) bigCard!: ElementRef;
-
   // card sizes
   public cardWidth: number = 0;
   public cardHeight: number = 0;
@@ -32,14 +28,6 @@ export class CardDisplayComponent {
 
   getCurrentCard(): CardData{
     return this.editorService.getCurrentCard();
-  }
-
-  clickCard(){
-    domtoimage.toBlob(this.bigCard.nativeElement).then(function (blob) {
-      var url = window.URL.createObjectURL(blob);
-      window.open(url);
-      //alert(blob);//(window as Window).saveAs(blob, 'my-node.png');
-    });
   }
 
   setCardDimensions(){
