@@ -147,17 +147,31 @@ export class CardEditorComponent {
 
   removeAbility(){
     this.getCard().abilities.pop();
+  }  
+  
+  onFileChanged(event: any) {
+    const file = event.target.files[0];
+    var fr = new FileReader();
+    fr.onload = () => { 
+      if(typeof(fr.result) == "string"){
+        this.getCard().imageURL = fr.result;
+        this.loadCard();
+      }
+    };
+    fr.readAsDataURL(file);
   }
 
   loadCard(){
     this.nameElement.nativeElement.value = this.getCard().name;
     this.creditElement.nativeElement.value = this.getCard().artistCredit;
-    this.urlElement.nativeElement.value = this.getCard().imageURL;
     this.flavorElement.nativeElement.value = this.getCard().flavor;
     this.textElement.nativeElement.value = this.getCard().text;
     this.typesElement.nativeElement.value = this.getCard().cardTypes;
     this.subtypesElement.nativeElement.value = this.getCard().subTypes;
     this.vpElement.nativeElement.value = this.getCard().vp == undefined ? "" : this.getCard().vp;
+
+    // set url
+    this.urlElement.nativeElement.value = this.getCard().imageURL;
 
     // costs
     this.costFoodElement.nativeElement.value = this.getCard().cost[Resource.Food];

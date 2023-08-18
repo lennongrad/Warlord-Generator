@@ -13,8 +13,10 @@
     </div>
     <div class="editor-option">
         <div class="option-title">Image URL:</div>
-        <div class="option-input">
-            <input (keyup)="urlKey($event)" #url>
+        <div class="option-input" id="file-input">
+            <input type="file" class="file-input-dialogue" (change)="onFileChanged($event)" #fileInput>
+            <button (click)="fileInput.click()">Upload</button>
+            <input placeholder="Use external URL..." (keyup)="urlKey($event)" #url>
         </div>
     </div>
     <div class="editor-option">
